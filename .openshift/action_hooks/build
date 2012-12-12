@@ -3,3 +3,90 @@
 # available.  Otherwise it will execute while your application is stopped
 # before the deploy step.  This script gets executed directly, so it
 # could be python, php, ruby, etc.
+
+# bailout on first error
+set -e
+
+cd ~/app-root/runtime/
+
+# create dir to put all our stuff
+mkdir couchdb
+cd couchdb
+# handy variable
+BASEPATH=$PWD
+
+# get spidermonkey
+wget http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz
+# get erlang
+wget http://www.erlang.org/download/otp_src_R15B03.tar.gz
+# get couchdb
+wget http://apache.lehtivihrea.org/couchdb/releases/1.2.0/apache-couchdb-1.2.0.tar.gz
+# get ICU
+wget http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz
+
+# unpack all
+tar -xzf js185-1.0.0.tar.gz
+tar -xzf otp_src_R15B03.tar.gz
+tar -xzf apache-couchdb-1.2.0.tar.gz
+tar -xzf icu4c-4_8_1_1-src.tgz
+
+# remove to avoid hiting the quota
+rm js185-1.0.0.tar.gz
+rm otp_src_R15B03.tar.gz
+rm apache-couchdb-1.2.0.tar.gz
+rm icu4c-4_8_1_1-src.tgz
+
+# build and install ICU
+cd icu/source
+./configure --prefix=$BASEPATH/usr/
+make && make install
+
+# build and install spidermonkey
+cd ../../js-1.8.5/js/src
+./configure --prefix=$BASEPATH/usr/
+make && make install
+# some step ahead chokes if this file exists
+rm js
+
+# build and install erlang
+cd ../../../otp_src_R15B03
+./configure --prefix=$BASEPATH/usr/
+make && make install
+
+# build couchdb
+cd ../apache-couchdb-1.2.0
+export PATH=$PATH:$BASEPATH/usr/bin/:$BASEPATH/usr/local/bin
+export ICU_CONFIG="$BASEPATH/usr/bin/icu-config --detect-prefix"
+export ICU_CPPFLAGS="-I$BASEPATH/usr/include/"
+./configure --prefix=$BASEPATH/usr/ --with-js-lib=$BASEPATH/usr/lib/ --with-js-include=$BASEPATH/usr/include/js/ --with-erlang=$BASEPATH/usr/lib/erlang/usr/include/
+make && make install
+
+
+# do some customizations
+
+
+cd $BASEPATH
+# customize couchdb defaults
+cat > usr/etc/default/couchdb << EOM
+# Sourced by init script for configuration.
+
+# we use the current username to run couchdb
+#COUCHDB_USER=couchdb
+COUCHDB_STDOUT_FILE=/dev/null
+COUCHDB_STDERR_FILE=/dev/null
+COUCHDB_RESPAWN_TIMEOUT=5
+COUCHDB_OPTIONS=
+EOM
+
+# change port and bind_address where openshift expects DIY apps to serve
+cat > usr/etc/couchdb/local.ini << EOM
+[httpd]
+port = 8080
+bind_address = $OPENSHIFT_INTERNAL_IP
+EOM
+
+# export this path to make couchdb load ICU lib
+export LD_LIBRARY_PATH=$BASEPATH/usr/lib/
+
+# finally start couchdb!
+usr/etc/rc.d/couchdb start

@@ -13,13 +13,13 @@ Create an account at http://openshift.redhat.com/
 
 Create a Openshift application (using any application name you want)
 
-Add this upstream repository
+Add this upstream repository::
 
     cd appname
     git remote add appname -m master git://github.com/marianoguerra/couchdb-for-openshift.git
     git pull -s recursive -X theirs appname master
 
-Then push the repo upstream
+Then push the repo upstream::
 
     git push
 

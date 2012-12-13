@@ -26,6 +26,14 @@ Then push the repo upstream::
 Now go play an come back around one hour later and you will have a running couchdb
 instance.
 
+.. note::
+
+        after a build the last line should be 
+
+        remote: Running .openshift/action_hooks/post_deploy
+
+        if it doesn't return to the shell you may have to do ctrl-c
+
 The next step is to make it secure, go to
 
 http://appname-$yournamespace.rhcloud.com/_utils

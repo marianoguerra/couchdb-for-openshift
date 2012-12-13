@@ -16,8 +16,8 @@ Create a Openshift application (using any application name you want)
 Add this upstream repository::
 
     cd appname
-    git remote add appname -m master git://github.com/marianoguerra/couchdb-for-openshift.git
-    git pull -s recursive -X theirs appname master
+    git remote add couchdb-for-openshift -m master git://github.com/marianoguerra/couchdb-for-openshift.git
+    git pull -s recursive -X theirs couchdb-for-openshift master
 
 Then push the repo upstream::
 

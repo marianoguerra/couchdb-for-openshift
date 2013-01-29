@@ -5,6 +5,6 @@
 
 cd ~/app-root/runtime/couchdb
 # export this path to make couchdb load ICU lib
-export LD_LIBRARY_PATH=usr/lib/
+export LD_LIBRARY_PATH=usr/local/lib/
 # finally start couchdb!
 usr/etc/rc.d/couchdb start

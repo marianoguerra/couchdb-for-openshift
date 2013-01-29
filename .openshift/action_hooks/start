@@ -2,3 +2,9 @@
 # The logic to start up your application should be put in this
 # script. The application will work only if it binds to
 # $OPENSHIFT_INTERNAL_IP:8080
+
+cd ~/app-root/runtime/couchdb
+# export this path to make couchdb load ICU lib
+export LD_LIBRARY_PATH=usr/lib/
+# finally start couchdb!
+usr/etc/rc.d/couchdb start

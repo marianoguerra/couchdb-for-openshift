@@ -13,7 +13,9 @@ mkdir -p couchdb
 cd couchdb
 
 # get spidermonkey
-wget http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz
+wget ftp://ftp.univie.ac.at/systems/linux/fedora/releases/17/Everything/x86_64/os/Packages/j/js-devel-1.8.5-9.fc17.x86_64.rpm
+wget ftp://ftp.univie.ac.at/systems/linux/fedora/releases/17/Fedora/x86_64/os/Packages/j/js-1.8.5-9.fc17.x86_64.rpm
+
 # get erlang
 wget http://www.erlang.org/download/otp_src_R15B03-1.tar.gz
 # get couchdb
@@ -22,14 +24,13 @@ wget http://artfiles.org/apache.org/couchdb/1.2.1/apache-couchdb-1.2.1.tar.gz
 wget http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-RHEL6-x64.tgz
 
 # unpack all
-tar -xzf js185-1.0.0.tar.gz
+rpm2cpio js-devel-1.8.5-9.fc17.x86_64.rpm | cpio -id 
+rpm2cpio js-1.8.5-9.fc17.x86_64.rpm | cpio -id 
+
 tar -xzf otp_src_R15B03-1.tar.gz
 tar -xzf apache-couchdb-1.2.1.tar.gz
 tar -xzf icu4c-4_8_1_1-RHEL6-x64.tgz
 
 # remove to avoid hiting the quota
-rm js185-1.0.0.tar.gz
-rm otp_src_R15B03-1.tar.gz
-rm apache-couchdb-1.2.1.tar.gz
-rm icu4c-4_8_1_1-RHEL6-x64.tgz
+rm *.rpm *.tar.gz *.tgz
 

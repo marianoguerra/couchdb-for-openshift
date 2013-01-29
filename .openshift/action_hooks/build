@@ -12,13 +12,6 @@ cd ~/app-root/runtime/couchdb
 # handy variable
 BASEPATH=$PWD
 
-# build and install spidermonkey
-cd ../../js-1.8.5/js/src
-./configure --prefix=$BASEPATH/usr/
-make && make install
-# some step ahead chokes if this file exists
-rm js
-
 # build and install erlang
 cd ../../../otp_src_R15B03
 ./configure --prefix=$BASEPATH/usr/
@@ -29,7 +22,7 @@ cd ../apache-couchdb-1.2.1
 export PATH=$PATH:$BASEPATH/usr/bin/:$BASEPATH/usr/local/bin
 export ICU_CONFIG="$BASEPATH/usr/local/bin/icu-config --detect-prefix"
 export ICU_CPPFLAGS="-I$BASEPATH/usr/local/include/"
-./configure --prefix=$BASEPATH/usr/ --with-js-lib=$BASEPATH/usr/lib/ --with-js-include=$BASEPATH/usr/include/js/ --with-erlang=$BASEPATH/usr/lib/erlang/usr/include/
+./configure --prefix=$BASEPATH/usr/ --with-js-lib=$BASEPATH/usr/lib64/ --with-js-include=$BASEPATH/usr/include/js/ --with-erlang=$BASEPATH/usr/lib/erlang/usr/include/
 make && make install
 
 

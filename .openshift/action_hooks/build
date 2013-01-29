@@ -12,6 +12,11 @@ cd ~/app-root/runtime/couchdb
 # handy variable
 BASEPATH=$PWD
 
+# build and install ICU
+cd $BASEPATH/icu/source
+./configure --prefix=$BASEPATH/usr/
+make && make install
+
 # build and install spidermonkey
 cd $BASEPATH/js-1.8.5/js/src
 ./configure --prefix=$BASEPATH/usr/
@@ -27,9 +32,9 @@ make && make install
 # build couchdb
 cd $BASEPATH/apache-couchdb-1.2.1
 export PATH=$PATH:$BASEPATH/usr/bin/:$BASEPATH/usr/local/bin
-export ICU_CONFIG="$BASEPATH/usr/local/bin/icu-config --detect-prefix"
-export ICU_CPPFLAGS="-I$BASEPATH/usr/local/include/"
-./configure --prefix=$BASEPATH/usr/ --with-js-lib=$BASEPATH/usr/lib/ --with-js-include=$BASEPATH/usr/include/js/ --with-erlang=$BASEPATH/usr/lib/erlang/usr/include/
+export ICU_CONFIG="$BASEPATH/usr/bin/icu-config --detect-prefix"
+export ICU_CPPFLAGS="-I$BASEPATH/usr/include/"
+./configure --prefix=$BASEPATH --with-js-lib=$BASEPATH/usr/lib/ --with-js-include=$BASEPATH/usr/include/js/ --with-erlang=$BASEPATH/usr/lib/erlang/usr/include/
 make && make install
 
 
@@ -38,7 +43,7 @@ make && make install
 
 cd $BASEPATH
 # customize couchdb defaults
-cat > usr/etc/default/couchdb << EOM
+cat > etc/default/couchdb << EOM
 # Sourced by init script for configuration.
 
 # we use the current username to run couchdb
@@ -50,7 +55,7 @@ COUCHDB_OPTIONS=
 EOM
 
 # change port and bind_address where openshift expects DIY apps to serve
-cat > usr/etc/couchdb/local.ini << EOM
+cat > etc/couchdb/local.ini << EOM
 [httpd]
 port = 8080
 bind_address = $OPENSHIFT_INTERNAL_IP

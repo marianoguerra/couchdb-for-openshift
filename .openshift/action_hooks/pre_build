@@ -19,13 +19,13 @@ wget http://www.erlang.org/download/otp_src_R15B03-1.tar.gz
 # get couchdb
 wget http://artfiles.org/apache.org/couchdb/1.2.1/apache-couchdb-1.2.1.tar.gz
 # get ICU
-wget http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-RHEL6-x64.tgz
+wget http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz
 
 # unpack all
 tar -xzf js185-1.0.0.tar.gz
 tar -xzf otp_src_R15B03-1.tar.gz
 tar -xzf apache-couchdb-1.2.1.tar.gz
-tar -xzf icu4c-4_8_1_1-RHEL6-x64.tgz
+tar -xzf icu4c-4_8_1_1-src.tgz
 
 # remove to avoid hiting the quota
 rm *.tar.gz *.tgz

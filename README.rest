@@ -11,7 +11,9 @@ Running on OpenShift
 
 Create an account at http://openshift.redhat.com/
 
-Create a Openshift application (using any application name you want)
+Create a Openshift DIY application (using any application name you want)::
+
+    rhc create-app <app_name> diy
 
 Add this upstream repository::
 

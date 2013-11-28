@@ -1,0 +1,69 @@
+couchdb for openshift
+=====================
+
+This git repository allows to have couchdb on Red Hat OpenShift.
+
+The .openshift directory contains the necessary build action_hook to download
+couchdb source code and all it's dependencies and build from scratch.
+
+Running on OpenShift
+--------------------
+
+Create an account at http://openshift.redhat.com/
+
+Create a Openshift application (using any application name you want)
+
+Add this upstream repository::
+
+    cd appname
+    git remote add couchdb-for-openshift -m master git://github.com/marianoguerra/couchdb-for-openshift.git
+    git pull -s recursive -X theirs couchdb-for-openshift master
+
+Then push the repo upstream::
+
+    git push
+
+Now go play an come back around one hour later and you will have a running couchdb
+instance.
+
+.. note::
+
+        after a build the last line should be 
+
+        remote: Running .openshift/action_hooks/post_deploy
+
+        if it doesn't return to the shell you may have to do ctrl-c
+
+The next step is to make it secure, go to
+
+http://appname-$yournamespace.rhcloud.com/_utils
+
+and click "Fix this" on the bottom right corner and setup an admin user.
+
+After this if you don't want the data to be world readabable go to "Configuration"
+on the right panel and change "require_valid_user" to true.
+
+try accessing futon with an unauthenticated session and it should ask you for
+credentials before showing you anything.
+
+How does it work
+----------------
+
+it fetches and builds:
+
+* ICU (international components for unicode)
+* spidermonkey (JS engine)
+* erlang
+* couchdb
+
+and then makes some configuration changes to couchdb.
+
+author
+------
+
+marianoguerra
+
+license
+-------
+
+Don't know if it's needed but in case you need it, everything here is MIT.

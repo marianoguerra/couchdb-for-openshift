@@ -1,10 +1,8 @@
 #!/bin/bash
-source $OPENSHIFT_CARTRIDGE_SDK_BASH
-
 # The logic to stop your application should be put in this script.
-if [ -z "$(ps -ef | grep testrubyserver.rb | grep -v grep)" ]
-then
-    client_result "Application is already stopped"
-else
-    kill `ps -ef | grep testrubyserver.rb | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
-fi
+cd ~/app-root/runtime/couchdb
+# export this path to make couchdb load ICU lib
+export LD_LIBRARY_PATH=usr/lib/
+# finally start couchdb!
+etc/rc.d/couchdb stop
+exit 0

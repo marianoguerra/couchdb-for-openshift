@@ -1,0 +1,62 @@
+#!/bin/bash
+# This is a simple build script and will be executed on your CI system if 
+# available.  Otherwise it will execute while your application is stopped
+# before the deploy step.  This script gets executed directly, so it
+# could be python, php, ruby, etc.
+
+# bailout on first error
+set -e
+
+cd ~/app-root/runtime/couchdb
+
+# handy variable
+BASEPATH=$PWD
+
+# build and install ICU
+cd $BASEPATH/icu/source
+./configure --prefix=$BASEPATH/usr/
+make && make install
+
+# build and install spidermonkey
+cd $BASEPATH/js-1.8.5/js/src
+./configure --prefix=$BASEPATH/usr/
+make && make install
+# some step ahead chokes if this file exists
+rm js
+
+# build and install erlang
+cd $BASEPATH/otp_src_R15B03
+./configure --prefix=$BASEPATH/usr/
+make && make install
+
+# build couchdb
+cd $BASEPATH/apache-couchdb-1.2.1
+export PATH=$PATH:$BASEPATH/usr/bin/:$BASEPATH/usr/local/bin
+export ICU_CONFIG="$BASEPATH/usr/bin/icu-config --detect-prefix"
+export ICU_CPPFLAGS="-I$BASEPATH/usr/include/"
+./configure --prefix=$BASEPATH --with-js-lib=$BASEPATH/usr/lib/ --with-js-include=$BASEPATH/usr/include/js/ --with-erlang=$BASEPATH/usr/lib/erlang/usr/include/
+make && make install
+
+
+# do some customizations
+
+
+cd $BASEPATH
+# customize couchdb defaults
+cat > etc/default/couchdb << EOM
+# Sourced by init script for configuration.
+
+# we use the current username to run couchdb
+#COUCHDB_USER=couchdb
+COUCHDB_STDOUT_FILE=/dev/null
+COUCHDB_STDERR_FILE=/dev/null
+COUCHDB_RESPAWN_TIMEOUT=5
+COUCHDB_OPTIONS=
+EOM
+
+# change port and bind_address where openshift expects DIY apps to serve
+cat > etc/couchdb/local.ini << EOM
+[httpd]
+port = 8080
+bind_address = $OPENSHIFT_INTERNAL_IP
+EOM

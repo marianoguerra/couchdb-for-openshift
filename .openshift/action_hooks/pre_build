@@ -1,0 +1,32 @@
+#!/bin/bash
+# This is a simple script and will be executed on your CI system if 
+# available.  Otherwise it will execute while your application is stopped
+# before the build step.  This script gets executed directly, so it
+# could be python, php, ruby, etc.
+
+set -e
+
+cd ~/app-root/runtime/
+
+# create dir to put all our stuff
+mkdir -p couchdb
+cd couchdb
+
+# get spidermonkey
+wget http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz
+# get erlang
+wget http://www.erlang.org/download/otp_src_R15B03-1.tar.gz
+# get couchdb
+wget http://archive.apache.org/dist/couchdb/1.2.1/apache-couchdb-1.2.1.tar.gz
+# get ICU
+wget http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz
+
+# unpack all
+tar -xzf js185-1.0.0.tar.gz
+tar -xzf otp_src_R15B03-1.tar.gz
+tar -xzf apache-couchdb-1.2.1.tar.gz
+tar -xzf icu4c-4_8_1_1-src.tgz
+
+# remove to avoid hiting the quota
+rm *.tar.gz *.tgz
+

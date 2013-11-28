@@ -57,6 +57,6 @@ EOM
 # change port and bind_address where openshift expects DIY apps to serve
 cat > etc/couchdb/local.ini << EOM
 [httpd]
-port = 8080
-bind_address = $OPENSHIFT_INTERNAL_IP
+port = $OPENSHIFT_DIY_PORT
+bind_address = $OPENSHIFT_DIY_IP
 EOM

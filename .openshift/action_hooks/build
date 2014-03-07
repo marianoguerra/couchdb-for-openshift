@@ -30,7 +30,7 @@ cd $BASEPATH/otp_src_R15B03
 make && make install
 
 # build couchdb
-cd $BASEPATH/apache-couchdb-1.2.1
+cd $BASEPATH/apache-couchdb-1.5.0
 export PATH=$PATH:$BASEPATH/usr/bin/:$BASEPATH/usr/local/bin
 export ICU_CONFIG="$BASEPATH/usr/bin/icu-config --detect-prefix"
 export ICU_CPPFLAGS="-I$BASEPATH/usr/include/"

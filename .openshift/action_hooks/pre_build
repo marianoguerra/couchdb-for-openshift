@@ -33,7 +33,7 @@ if [ ! -e apache-couchdb-1.5.0 ]; then
     rm -f apache-couchdb-1.5.0.tar.gz
 fi
 
-if [! -e icu ]; then
+if [ ! -e icu ]; then
     # get ICU
     wget http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz
     tar -xzf icu4c-4_8_1_1-src.tgz

@@ -12,21 +12,30 @@ cd ~/app-root/runtime/
 mkdir -p couchdb
 cd couchdb
 
-# get spidermonkey
-wget http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz
-# get erlang
-wget http://www.erlang.org/download/otp_src_R15B03-1.tar.gz
-# get couchdb
-wget http://archive.apache.org/dist/couchdb/source/1.5.0/apache-couchdb-1.5.0.tar.gz
-# get ICU
-wget http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz
+if [ ! -e js-1.8.5 ]; then
+    # get spidermonkey
+    wget http://ftp.mozilla.org/pub/mozilla.org/js/js185-1.0.0.tar.gz
+    tar -xzf js185-1.0.0.tar.gz
+    rm -f js185-1.0.0.tar.gz
+fi
 
-# unpack all
-tar -xzf js185-1.0.0.tar.gz
-tar -xzf otp_src_R15B03-1.tar.gz
-tar -xzf apache-couchdb-1.5.0.tar.gz
-tar -xzf icu4c-4_8_1_1-src.tgz
+if [ ! -e otp_src_R15B03 ]; then
+    # get erlang
+    wget http://www.erlang.org/download/otp_src_R15B03-1.tar.gz
+    tar -xzf otp_src_R15B03-1.tar.gz
+    rm -f otp_src_R15B03-1.tar.gz
+fi
 
-# remove to avoid hiting the quota
-rm *.tar.gz *.tgz
+if [ ! -e apache-couchdb-1.5.0 ]; then
+    # get couchdb
+    wget http://archive.apache.org/dist/couchdb/source/1.5.0/apache-couchdb-1.5.0.tar.gz
+    tar -xzf apache-couchdb-1.5.0.tar.gz
+    rm -f apache-couchdb-1.5.0.tar.gz
+fi
 
+if [! -e icu ]; then
+    # get ICU
+    wget http://download.icu-project.org/files/icu4c/4.8.1.1/icu4c-4_8_1_1-src.tgz
+    tar -xzf icu4c-4_8_1_1-src.tgz
+    rm -f icu4c-4_8_1_1-src.tgz
+fi

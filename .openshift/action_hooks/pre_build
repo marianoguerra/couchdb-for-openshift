@@ -19,18 +19,18 @@ if [ ! -e js-1.8.5 ]; then
     rm -f js185-1.0.0.tar.gz
 fi
 
-if [ ! -e otp_src_R15B03 ]; then
+if [ ! -e otp_src_17.1 ]; then
     # get erlang
-    wget http://www.erlang.org/download/otp_src_R15B03-1.tar.gz
-    tar -xzf otp_src_R15B03-1.tar.gz
-    rm -f otp_src_R15B03-1.tar.gz
+    wget http://www.erlang.org/download/otp_src_17.1.tar.gz
+    tar -xzf otp_src_17.1.tar.gz
+    rm -f otp_src_17.1.tar.gz
 fi
 
-if [ ! -e apache-couchdb-1.5.0 ]; then
+if [ ! -e apache-couchdb-1.6.0 ]; then
     # get couchdb
-    wget http://archive.apache.org/dist/couchdb/source/1.5.0/apache-couchdb-1.5.0.tar.gz
-    tar -xzf apache-couchdb-1.5.0.tar.gz
-    rm -f apache-couchdb-1.5.0.tar.gz
+    wget http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz
+    tar -xzf apache-couchdb-1.6.0.tar.gz
+    rm -f apache-couchdb-1.6.0.tar.gz
 fi
 
 if [ ! -e icu ]; then

@@ -26,11 +26,11 @@ if [ ! -e otp_src_17.1 ]; then
     rm -f otp_src_17.1.tar.gz
 fi
 
-if [ ! -e apache-couchdb-1.6.0 ]; then
+if [ ! -e apache-couchdb-1.6.1 ]; then
     # get couchdb
-    wget http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.0/apache-couchdb-1.6.0.tar.gz
-    tar -xzf apache-couchdb-1.6.0.tar.gz
-    rm -f apache-couchdb-1.6.0.tar.gz
+    wget http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.1/apache-couchdb-1.6.1.tar.gz
+    tar -xzf apache-couchdb-1.6.1.tar.gz
+    rm -f apache-couchdb-1.6.1.tar.gz
 fi
 
 if [ ! -e icu ]; then

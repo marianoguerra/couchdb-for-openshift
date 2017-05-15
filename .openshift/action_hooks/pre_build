@@ -28,7 +28,7 @@ fi
 
 if [ ! -e apache-couchdb-1.6.1 ]; then
     # get couchdb
-    wget http://ftp.carnet.hr/misc/apache/couchdb/source/1.6.1/apache-couchdb-1.6.1.tar.gz
+    wget http://www-us.apache.org/dist/couchdb/source/1.6.1/apache-couchdb-1.6.1.tar.gz
     tar -xzf apache-couchdb-1.6.1.tar.gz
     rm -f apache-couchdb-1.6.1.tar.gz
 fi

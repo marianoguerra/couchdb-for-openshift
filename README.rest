@@ -19,7 +19,7 @@ Add this upstream repository::
 
     cd appname
     git remote add couchdb-for-openshift -m master git://github.com/marianoguerra/couchdb-for-openshift.git
-    git pull -s recursive -X theirs couchdb-for-openshift master
+    git pull -s recursive -X theirs couchdb-for-openshift master --allow-unrelated-histories
 
 Then push the repo upstream::
 
